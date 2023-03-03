@@ -5,7 +5,7 @@
         estimated_return_text = document.querySelector('#stp-daily-orders-per-client-text'),
         hd = document.querySelector('[name="compound_param"]:checked').value,
         mu = document.querySelector('[name="compound_multi_param"]:checked').value,
-        axis = (window.innerWidth < 981) ? 'x': 'y';
+        axis = (window.innerWidth < 981) ? 'x' : 'y';
 
 
     function updateValue(element, action) {
@@ -15,7 +15,6 @@
             step = parseFloat(element.getAttribute('step')) || 1,
             oldValue = element.dataset.value || element.defaultValue || 0,
             newValue = parseFloat(element.value.replace(/\$/, ''));
-
 
 
         if (isNaN(parseFloat(newValue))) {
@@ -39,20 +38,20 @@
 
     function getChartData() {
 
-        var  s = parseInt(investment_timespan.value), //storage
+        var s = parseInt(investment_timespan.value), //storage
             t = parseInt(estimated_return.value),// transfer
             h = document.querySelector('[name="compound_param"]:checked').value,
             m = document.querySelector('[name="compound_multi_param"]:checked').value,
-            labels = ["backblaze","bunny","scalway" ,"vultr"],
-            colorLogo = ["red","orange","violet" ,"blue"],
+            labels = ["backblaze", "bunny", "scalway", "vultr"],
+            colorLogo = ["red", "orange", "violet", "blue"],
             Grays = {
                 label: "G",
-                data: [0,0,0,0],
+                data: [0, 0, 0, 0],
                 minBarLength: 2,
                 barPercentage: 0.5,
-                maxBarThickness:20,
-                backgroundColor: ['gray','gray','gray','gray'],
-                borderColor: ['rgb(116 114 114)','rgb(116 114 114)','rgb(116 114 114)','rgb(116 114 114)'],
+                maxBarThickness: 20,
+                backgroundColor: ['gray', 'gray', 'gray', 'gray'],
+                borderColor: ['rgb(116 114 114)', 'rgb(116 114 114)', 'rgb(116 114 114)', 'rgb(116 114 114)'],
                 borderWidth: 0,
                 hoverOffset: 4
             },
@@ -73,35 +72,35 @@
                     Grays.data[i] = 7;
             }
 
-            if (s > 0  && i == 1 && h){
+            if (s > 0 && i == 1 && h) {
 
-                Grays.data[i] = Grays.data[i] + s * h ;
+                Grays.data[i] = Grays.data[i] + s * h;
 
-                if (t > 0 ) {
-                    Grays.data[i] = Grays.data[i] +  t * 0.01;
+                if (t > 0) {
+                    Grays.data[i] = Grays.data[i] + t * 0.01;
                 }
 
-                if( Grays.data[i] > 10 ) {
+                if (Grays.data[i] > 10) {
                     Grays.data[i] = 10;
                 }
             }
 
 
-            if (s > 0 && i == 2 && m){
+            if (s > 0 && i == 2 && m) {
 
                 let s_n = 0;
 
-                if(s > 75){
-                     s_n = s - 75;
+                if (s > 75) {
+                    s_n = s - 75;
                 }
-                Grays.data[i] = Grays.data[i] +  s_n * m ;
+                Grays.data[i] = Grays.data[i] + s_n * m;
 
-                if (t > 0 ) {
+                if (t > 0) {
 
-                    if( t > 75 ){
+                    if (t > 75) {
                         let t_n = t - 75;
-                        Grays.data[i] = Grays.data[i] +  t_n * 0.02;
-                    }else{
+                        Grays.data[i] = Grays.data[i] + t_n * 0.02;
+                    } else {
                         Grays.data[i] = 0;
                     }
 
@@ -110,16 +109,16 @@
             }
 
 
-            if ( s > 0 && i == 3){
+            if (s > 0 && i == 3) {
 
                 Grays.data[i] = Grays.data[i] + s * 0.01;
 
-                if ( t > 0 ) {
+                if (t > 0) {
 
                     Grays.data[i] = Grays.data[i] + t * 0.01;
                 }
 
-                if(Grays.data[i] < 5){
+                if (Grays.data[i] < 5) {
                     Grays.data[i] = 5;
                 }
 
@@ -127,14 +126,13 @@
             }
 
 
-
         }
 
         for (var j = 0; j < labels.length; j++) {
 
-            let minValue  = min(Grays.data);
+            let minValue = min(Grays.data);
 
-            if(Grays.data[j] == minValue  ){
+            if (Grays.data[j] == minValue) {
 
                 Grays.backgroundColor[j] = colorLogo[j];
 
@@ -207,18 +205,21 @@
             plugins: {
                 tooltip: {
                     callbacks: {
-                        label: function(context) {
+                        label: function (context) {
                             let label = context.dataset.label || '';
 
                             if (label) {
                                 label += ': ';
                             }
                             if (context.parsed.y !== null) {
-                                label += new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(context.parsed.y);
+                                label += new Intl.NumberFormat('en-US', {
+                                    style: 'currency',
+                                    currency: 'USD'
+                                }).format(context.parsed.y);
                             }
                             return label;
                         },
-                        labelColor: function(context) {
+                        labelColor: function (context) {
                             return {
                                 borderColor: 'rgb(0, 0, 255)',
                                 backgroundColor: 'rgb(255, 0, 0)',
@@ -227,7 +228,7 @@
                                 borderRadius: 2,
                             };
                         },
-                        labelTextColor: function(context) {
+                        labelTextColor: function (context) {
                             return '#543453';
                         }
                     }
@@ -239,9 +240,8 @@
     };
 
     Chart.defaults.font.size = 16;
-    Chart.defaults.borderColor = ["white","white"];
+    Chart.defaults.borderColor = ["white", "white"];
     Chart.defaults.backgroundColor = 'white';
-
 
 
     var ctx = document.getElementById('calculatorChart').getContext('2d'),
