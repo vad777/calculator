@@ -3,10 +3,6 @@
 
         $("input[type=range]").rangeslider({polyfill: false});
 
-        var
-            c = $("#stp-clients-attracted"),
-            d = $("#stp-daily-orders-per-client");
-
         $(".js-calculator_input-wrap > .js-calculator_text-input").on("change input", function () {
             $(this).parent().find(".js-calculator_range").val($(this).val()).change();
 
