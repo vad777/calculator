@@ -16,11 +16,5 @@
             $(this).parent().find(".js-calculator_text-input").val($(this).val());
         });
 
-        $.fn.digits = function () {
-            return this.each(function () {
-                $(this).text($(this).text().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1'"));
-            });
-        };
-
     });
 })(jQuery);
